@@ -14,3 +14,6 @@ map("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" }
 
 -- Code actions
 map("n", "ga", vim.lsp.buf.code_action, { desc = "Code actions" })
+
+-- Java profile toggle
+map("n", "<leader>cj", "<cmd>JavaProfileToggle<cr>", { desc = "Toggle Java format profile" })

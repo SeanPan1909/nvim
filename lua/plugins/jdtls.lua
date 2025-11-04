@@ -1,32 +1,46 @@
--- Ensure jdtls uses Java 21+ from jenv
--- Note: Make sure your jenv global version is Java 21 or higher (jenv global 25)
+-- Neovim always uses Java 25 for jdtls (independent of shell JAVA_HOME)
+-- This allows you to use Java 17 for other projects outside Neovim
+
+-- Global variable to track formatting profile
+-- "default" = 2-space indentation (normal preference)
+-- "loveholidays" = 4-space Loveholidays formatter (exception)
+vim.g.java_format_profile = vim.g.java_format_profile or "default"
+
 return {
   -- Configure the underlying jdtls settings
   {
     "mfussenegger/nvim-jdtls",
     opts = function(_, opts)
-      -- If JAVA_HOME is not set or points to old Java, use Java 25 as fallback
-      if not vim.env.JAVA_HOME or vim.env.JAVA_HOME == "" then
-        vim.env.JAVA_HOME = "/Users/sean.pan/Library/Java/JavaVirtualMachines/openjdk-25/Contents/Home"
-      end
-
-      -- Configure Eclipse formatter
-      local formatter_path = vim.fn.stdpath("config") .. "/loveholidays-eclipse-formatter.xml"
-      -- Convert to file:// URL as required by jdtls
-      local formatter_url = "file://" .. formatter_path
+      -- Always use Java 25 for jdtls in Neovim (overrides shell JAVA_HOME)
+      vim.env.JAVA_HOME = "/Users/sean.pan/Library/Java/JavaVirtualMachines/openjdk-25/Contents/Home"
 
       -- Ensure opts.settings exists
       opts.settings = opts.settings or {}
       opts.settings.java = opts.settings.java or {}
 
-      -- Configure formatter settings
-      opts.settings.java.format = {
-        enabled = true,
-        settings = {
-          url = formatter_url,
-          profile = "Loveholidays",
-        },
-      }
+      -- Configure formatter settings based on active profile
+      if vim.g.java_format_profile == "loveholidays" then
+        -- Loveholidays formatter (4 spaces)
+        local formatter_path = vim.fn.stdpath("config") .. "/loveholidays-eclipse-formatter.xml"
+        local formatter_url = "file://" .. formatter_path
+
+        opts.settings.java.format = {
+          enabled = true,
+          settings = {
+            url = formatter_url,
+            profile = "Loveholidays",
+          },
+        }
+      else
+        -- Default formatter with 2-space indentation
+        opts.settings.java.format = {
+          enabled = true,
+          settings = {
+            tabSize = 2,
+            insertSpaces = true,
+          },
+        }
+      end
 
       -- Import organization settings
       opts.settings.java.imports = {
@@ -65,7 +79,7 @@ return {
     ft = "java",
   },
 
-  -- Set Java-specific indentation
+  -- Set Java-specific indentation based on active profile
   {
     "LazyVim/LazyVim",
     opts = {
@@ -75,12 +89,33 @@ return {
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "java",
         callback = function()
-          vim.opt_local.tabstop = 4
-          vim.opt_local.shiftwidth = 4
-          vim.opt_local.softtabstop = 4
+          local indent_size = vim.g.java_format_profile == "loveholidays" and 4 or 2
+          vim.opt_local.tabstop = indent_size
+          vim.opt_local.shiftwidth = indent_size
+          vim.opt_local.softtabstop = indent_size
           vim.opt_local.expandtab = true
         end,
       })
+
+      -- Command to toggle between formatting profiles
+      vim.api.nvim_create_user_command("JavaProfileToggle", function()
+        if vim.g.java_format_profile == "default" then
+          vim.g.java_format_profile = "loveholidays"
+          print("Switched to Loveholidays profile (4 spaces)")
+        else
+          vim.g.java_format_profile = "default"
+          print("Switched to default profile (2 spaces)")
+        end
+        -- Notify that LSP restart is needed for formatter changes
+        print("Note: Restart LSP with :LspRestart for formatter changes to take effect")
+        -- Update indentation for current buffer if it's a Java file
+        if vim.bo.filetype == "java" then
+          local indent_size = vim.g.java_format_profile == "loveholidays" and 4 or 2
+          vim.opt_local.tabstop = indent_size
+          vim.opt_local.shiftwidth = indent_size
+          vim.opt_local.softtabstop = indent_size
+        end
+      end, { desc = "Toggle Java formatting profile" })
     end,
   },
 }
