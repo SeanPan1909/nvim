@@ -8,6 +8,9 @@ return {
     opts = {
       variant = "auto", -- auto, main, moon, or dawn
       dark_variant = "main", -- main, moon, or dawn
+      styles = {
+        transparency = true,
+      },
     },
   },
 
@@ -18,7 +21,7 @@ return {
     priority = 1000,
     opts = {
       options = {
-        transparent = false,
+        transparent = true,
       },
     },
   },
@@ -30,7 +33,7 @@ return {
     priority = 1000,
     opts = {
       compile = false,
-      transparent = false,
+      transparent = true,
       theme = "wave", -- wave (dark), dragon (dark), lotus (light)
     },
   },
@@ -40,6 +43,9 @@ return {
     "Mofiqul/dracula.nvim",
     lazy = false,
     priority = 1000,
+    opts = {
+      transparent_bg = true,
+    },
   },
 
   -- One Dark
@@ -49,6 +55,7 @@ return {
     priority = 1000,
     opts = {
       style = "dark", -- dark, darker, cool, deep, warm, warmer
+      transparent = true,
     },
   },
 
@@ -60,6 +67,7 @@ return {
     config = function()
       vim.g.gruvbox_material_background = "medium" -- hard, medium, soft
       vim.g.gruvbox_material_better_performance = 1
+      vim.g.gruvbox_material_transparent_background = 1
     end,
   },
 
@@ -71,6 +79,7 @@ return {
     config = function()
       vim.g.everforest_background = "medium" -- hard, medium, soft
       vim.g.everforest_better_performance = 1
+      vim.g.everforest_transparent_background = 1
     end,
   },
 
@@ -81,11 +90,23 @@ return {
     priority = 1000,
     opts = {
       variant = "default", -- default (dark) or light
-      transparent = false,
+      transparent = true,
       italic_comments = true,
       hide_fillchars = false,
       borderless_telescope = true,
       terminal_colors = true,
+    },
+  },
+
+  -- Tokyo Night
+  {
+    "folke/tokyonight.nvim",
+    opts = {
+      transparent = false,
+      styles = {
+        sidebars = "dark",
+        floats = "dark",
+      },
     },
   },
 

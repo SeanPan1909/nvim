@@ -4,3 +4,7 @@
 
 -- Ensure dark background for colorschemes
 vim.o.background = "dark"
+
+-- Disable blur for floating windows and popups
+vim.o.winblend = 0
+vim.o.pumblend = 0
