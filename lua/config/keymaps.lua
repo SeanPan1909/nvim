@@ -17,3 +17,15 @@ map("n", "ga", vim.lsp.buf.code_action, { desc = "Code actions" })
 
 -- Java profile toggle
 map("n", "<leader>cj", "<cmd>JavaProfileToggle<cr>", { desc = "Toggle Java format profile" })
+
+-- Indentation switching
+local function set_indent(size)
+  vim.bo.shiftwidth = size
+  vim.bo.tabstop = size
+  vim.bo.softtabstop = size
+  vim.bo.expandtab = true
+  print("Indentation set to " .. size .. " spaces")
+end
+
+map("n", "<leader>i2", function() set_indent(2) end, { desc = "Set indent to 2 spaces" })
+map("n", "<leader>i4", function() set_indent(4) end, { desc = "Set indent to 4 spaces" })

@@ -106,14 +106,50 @@ return {
           vim.g.java_format_profile = "default"
           print("Switched to default profile (2 spaces)")
         end
-        -- Notify that LSP restart is needed for formatter changes
-        print("Note: Restart LSP with :LspRestart for formatter changes to take effect")
+
         -- Update indentation for current buffer if it's a Java file
         if vim.bo.filetype == "java" then
           local indent_size = vim.g.java_format_profile == "loveholidays" and 4 or 2
           vim.opt_local.tabstop = indent_size
           vim.opt_local.shiftwidth = indent_size
           vim.opt_local.softtabstop = indent_size
+
+          -- Get the LSP client and update settings dynamically
+          local clients = vim.lsp.get_clients({ bufnr = 0, name = "jdtls" })
+          for _, client in ipairs(clients) do
+            local new_settings
+            if vim.g.java_format_profile == "loveholidays" then
+              local formatter_path = vim.fn.stdpath("config") .. "/loveholidays-eclipse-formatter.xml"
+              local formatter_url = "file://" .. formatter_path
+              new_settings = {
+                java = {
+                  format = {
+                    enabled = true,
+                    settings = {
+                      url = formatter_url,
+                      profile = "Loveholidays",
+                    },
+                  },
+                },
+              }
+            else
+              new_settings = {
+                java = {
+                  format = {
+                    enabled = true,
+                    settings = {
+                      tabSize = 2,
+                      insertSpaces = true,
+                    },
+                  },
+                },
+              }
+            end
+
+            -- Notify LSP of configuration change
+            client.notify("workspace/didChangeConfiguration", { settings = new_settings })
+            print("Formatter updated without restart!")
+          end
         end
       end, { desc = "Toggle Java formatting profile" })
     end,
