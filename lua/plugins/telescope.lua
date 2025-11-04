@@ -10,5 +10,8 @@ return {
     { "<leader>fF", function()
       require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h") })
     end, desc = "Find Files (Buffer Dir)" },
+    -- Swapped grep keymaps
+    { "<leader>sg", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },
+    { "<leader>sG", LazyVim.pick("live_grep", { root = false }), desc = "Grep (cwd)" },
   },
 }
