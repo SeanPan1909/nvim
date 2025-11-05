@@ -3,10 +3,17 @@
 -- Add any additional keymaps here
 
 local map = vim.keymap.set
+
 map("n", "<leader>h", "<C-w>h", { desc = "switch window left" })
 map("n", "<leader>j", "<C-w>j", { desc = "switch window down" })
 map("n", "<leader>k", "<C-w>k", { desc = "switch window up" })
 map("n", "<leader>l", "<C-w>l", { desc = "switch window right" })
+
+map("n", "J", "<C-d>zz", { desc = "scroll down half a page" })
+map("n", "K", "<C-u>zz", { desc = "scroll up half a page" })
+map("n", "<CR>", "m`o<Esc>``", { desc = "enter a new line after cursor" })
+map("n", "<S-CR>", "m`O<Esc>``", { desc = "enter a new line after cursor" })
+map("n", "<BS>", "J", { desc = "Remove current line cursor is on " })
 
 -- Tab navigation (using bufferline.nvim)
 map("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
@@ -27,5 +34,14 @@ local function set_indent(size)
   print("Indentation set to " .. size .. " spaces")
 end
 
-map("n", "<leader>i2", function() set_indent(2) end, { desc = "Set indent to 2 spaces" })
-map("n", "<leader>i4", function() set_indent(4) end, { desc = "Set indent to 4 spaces" })
+map("n", "<leader>i2", function()
+  set_indent(2)
+end, { desc = "Set indent to 2 spaces" })
+map("n", "<leader>i4", function()
+  set_indent(4)
+end, { desc = "Set indent to 4 spaces" })
+
+-- Make "c" command use black hole register (don't affect clipboard)
+map("n", "c", '"_c', { desc = "Change without yanking" })
+map("n", "C", '"_C', { desc = "Change to end of line without yanking" })
+map("v", "c", '"_c', { desc = "Change without yanking" })

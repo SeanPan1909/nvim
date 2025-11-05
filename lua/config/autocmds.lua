@@ -28,3 +28,11 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     end
   end,
 })
+
+-- Treat Avro schema files as JSON for LSP support
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.avsc",
+  callback = function()
+    vim.bo.filetype = "json"
+  end,
+})
