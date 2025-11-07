@@ -49,17 +49,18 @@ return {
         },
       }
 
-      -- Custom import order matching IntelliJ LoveHolidays style
+      -- Custom import order matching Loveholidays style
+      -- Pattern: loveholidays → blank → third-party → blank → java/javax
       opts.settings.java.completion = {
         importOrder = {
-          "#", -- Static imports first
-          "",  -- Blank line
-          "com.travelmatch",
-          "com.loveholidays",
-          "",  -- Blank line
-          "javax",
-          "java",
-          "",  -- Blank line
+          "#",               -- Static imports first
+          "",                -- Blank line
+          "com.travelmatch", -- Travelmatch packages
+          "com.loveholidays", -- Loveholidays packages
+          "",                -- Blank line (third-party libs go in between)
+          "",                -- Blank line before standard libs
+          "javax",           -- javax packages
+          "java",            -- java packages
         },
       }
 
@@ -130,6 +131,18 @@ return {
                       profile = "Loveholidays",
                     },
                   },
+                  completion = {
+                    importOrder = {
+                      "#",
+                      "",
+                      "com.travelmatch",
+                      "com.loveholidays",
+                      "",
+                      "",
+                      "javax",
+                      "java",
+                    },
+                  },
                 },
               }
             else
@@ -140,6 +153,14 @@ return {
                     settings = {
                       tabSize = 2,
                       insertSpaces = true,
+                    },
+                  },
+                  completion = {
+                    importOrder = {
+                      "#",
+                      "",
+                      "javax",
+                      "java",
                     },
                   },
                 },

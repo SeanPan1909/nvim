@@ -3,6 +3,15 @@
 -- Add any additional keymaps here
 
 local map = vim.keymap.set
+local unmap = vim.keymap.del
+
+-- Disable H and L for buffer navigation
+unmap("n", "H")
+unmap("n", "L")
+
+-- Remap H and L for line navigation
+map("n", "H", "^", { desc = "Go to first non-whitespace character" })
+map("n", "L", "$", { desc = "Go to end of line" })
 
 map("n", "<leader>h", "<C-w>h", { desc = "switch window left" })
 map("n", "<leader>j", "<C-w>j", { desc = "switch window down" })

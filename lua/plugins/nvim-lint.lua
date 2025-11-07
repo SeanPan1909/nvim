@@ -6,5 +6,9 @@ return {
       opts.linters_by_ft.go = {}
       opts.linters_by_ft.gomod = {}
     end
+
+    -- Add Python linting with ruff
+    opts.linters_by_ft = opts.linters_by_ft or {}
+    opts.linters_by_ft.python = { "ruff" }
   end,
 }
