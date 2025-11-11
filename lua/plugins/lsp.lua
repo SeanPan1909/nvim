@@ -6,6 +6,7 @@ return {
         keys = {
           -- Disable K keymap so custom scroll mapping works
           { "K", false },
+          { "gk", vim.lsp.buf.hover, desc = "LSP Hover" },
         },
       },
     },

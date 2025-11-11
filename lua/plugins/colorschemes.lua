@@ -1,113 +1,91 @@
 return {
-  -- Rose Pine
+  -- Catppuccin
   {
-    "rose-pine/neovim",
-    name = "rose-pine",
+    "catppuccin/nvim",
+    name = "catppuccin",
     lazy = false,
     priority = 1000,
     opts = {
-      variant = "auto", -- auto, main, moon, or dawn
-      dark_variant = "main", -- main, moon, or dawn
+      flavour = "mocha", -- latte, frappe, macchiato, mocha
+      background = {
+        light = "latte",
+        dark = "mocha",
+      },
+      transparent_background = false,
+      show_end_of_buffer = false,
+      term_colors = true,
+      dim_inactive = {
+        enabled = false,
+        shade = "dark",
+        percentage = 0.15,
+      },
+      no_italic = false,
+      no_bold = false,
+      no_underline = false,
       styles = {
-        transparency = true,
+        comments = { "italic" },
+        conditionals = { "italic" },
+        loops = {},
+        functions = {},
+        keywords = {},
+        strings = {},
+        variables = {},
+        numbers = {},
+        booleans = {},
+        properties = {},
+        types = {},
+        operators = {},
+      },
+      lsp_styles = {
+        underlines = {
+          errors = { "undercurl" },
+          hints = { "undercurl" },
+          warnings = { "undercurl" },
+          information = { "undercurl" },
+        },
+      },
+      integrations = {
+        aerial = true,
+        alpha = true,
+        cmp = true,
+        dashboard = true,
+        flash = true,
+        fzf = true,
+        grug_far = true,
+        gitsigns = true,
+        headlines = true,
+        illuminate = true,
+        indent_blankline = { enabled = true },
+        leap = true,
+        lsp_trouble = true,
+        mason = true,
+        mini = true,
+        navic = { enabled = true, custom_bg = "lualine" },
+        neotest = true,
+        neotree = true,
+        noice = true,
+        notify = true,
+        snacks = true,
+        telescope = true,
+        treesitter_context = true,
+        which_key = true,
       },
     },
-  },
-
-  -- Nightfox (provides nightfox, duskfox, nordfox, terafox, carbonfox, dawnfox)
-  {
-    "EdenEast/nightfox.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      options = {
-        transparent = true,
-      },
-    },
-  },
-
-  -- Kanagawa
-  {
-    "rebelot/kanagawa.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      compile = false,
-      transparent = true,
-      theme = "wave", -- wave (dark), dragon (dark), lotus (light)
-    },
-  },
-
-  -- Dracula
-  {
-    "Mofiqul/dracula.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      transparent_bg = true,
-    },
-  },
-
-  -- One Dark
-  {
-    "navarasu/onedark.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      style = "dark", -- dark, darker, cool, deep, warm, warmer
-      transparent = true,
-    },
-  },
-
-  -- Gruvbox Material
-  {
-    "sainnhe/gruvbox-material",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.g.gruvbox_material_background = "medium" -- hard, medium, soft
-      vim.g.gruvbox_material_better_performance = 1
-      vim.g.gruvbox_material_transparent_background = 1
+    config = function(_, opts)
+      require("catppuccin").setup(opts)
+      vim.cmd.colorscheme("catppuccin")
     end,
   },
 
-  -- Everforest
+  -- Bufferline integration for Catppuccin
   {
-    "sainnhe/everforest",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.g.everforest_background = "medium" -- hard, medium, soft
-      vim.g.everforest_better_performance = 1
-      vim.g.everforest_transparent_background = 1
+    "akinsho/bufferline.nvim",
+    optional = true,
+    opts = function(_, opts)
+      if (vim.g.colors_name or ""):find("catppuccin") then
+        opts.highlights = require("catppuccin.special.bufferline").get_theme()
+      end
     end,
-  },
-
-  -- Cyberdream
-  {
-    "scottmckendry/cyberdream.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      variant = "default", -- default (dark) or light
-      transparent = true,
-      italic_comments = true,
-      hide_fillchars = false,
-      borderless_telescope = true,
-      terminal_colors = true,
-    },
-  },
-
-  -- Tokyo Night
-  {
-    "folke/tokyonight.nvim",
-    opts = {
-      transparent = false,
-      styles = {
-        sidebars = "dark",
-        floats = "dark",
-      },
-    },
   },
 
   -- Configure Telescope for colorscheme preview

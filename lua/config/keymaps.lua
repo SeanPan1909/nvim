@@ -12,6 +12,13 @@ unmap("n", "L")
 -- Remap H and L for line navigation
 map("n", "H", "^", { desc = "Go to first non-whitespace character" })
 map("n", "L", "$", { desc = "Go to end of line" })
+map("o", "H", "^", { desc = "Go to first non-whitespace character" })
+map("o", "L", "$", { desc = "Go to end of line" })
+map("v", "H", "^", { desc = "Go to first non-whitespace character" })
+map("v", "L", "$", { desc = "Go to end of line" })
+
+-- Code actions
+map("n", "ga", vim.lsp.buf.code_action, { desc = "Code actions" })
 
 map("n", "<leader>h", "<C-w>h", { desc = "switch window left" })
 map("n", "<leader>j", "<C-w>j", { desc = "switch window down" })
@@ -27,9 +34,6 @@ map("n", "<BS>", "J", { desc = "Remove current line cursor is on " })
 -- Tab navigation (using bufferline.nvim)
 map("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 map("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" })
-
--- Code actions
-map("n", "ga", vim.lsp.buf.code_action, { desc = "Code actions" })
 
 -- Java profile toggle
 map("n", "<leader>cj", "<cmd>JavaProfileToggle<cr>", { desc = "Toggle Java format profile" })
