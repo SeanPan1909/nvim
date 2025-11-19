@@ -10,5 +10,8 @@ return {
     -- Add Python linting with ruff
     opts.linters_by_ft = opts.linters_by_ft or {}
     opts.linters_by_ft.python = { "ruff" }
+
+    -- Disable markdown linting
+    opts.linters_by_ft.markdown = {}
   end,
 }

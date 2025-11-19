@@ -20,11 +20,6 @@ map("v", "L", "$", { desc = "Go to end of line" })
 -- Code actions
 map("n", "ga", vim.lsp.buf.code_action, { desc = "Code actions" })
 
-map("n", "<leader>h", "<C-w>h", { desc = "switch window left" })
-map("n", "<leader>j", "<C-w>j", { desc = "switch window down" })
-map("n", "<leader>k", "<C-w>k", { desc = "switch window up" })
-map("n", "<leader>l", "<C-w>l", { desc = "switch window right" })
-
 map("n", "J", "<C-d>zz", { desc = "scroll down half a page" })
 map("n", "K", "<C-u>zz", { desc = "scroll up half a page" })
 map("n", "<CR>", "m`o<Esc>``", { desc = "enter a new line after cursor" })
@@ -58,3 +53,15 @@ end, { desc = "Set indent to 4 spaces" })
 map("n", "c", '"_c', { desc = "Change without yanking" })
 map("n", "C", '"_C', { desc = "Change to end of line without yanking" })
 map("v", "c", '"_c', { desc = "Change without yanking" })
+
+-- Disable Ctrl+f to allow Zellij to handle it (for fullscreen toggle)
+map("n", "<C-f>", "<Nop>", { desc = "Disabled - pass through to Zellij" })
+map("v", "<C-f>", "<Nop>", { desc = "Disabled - pass through to Zellij" })
+map("i", "<C-f>", "<Nop>", { desc = "Disabled - pass through to Zellij" })
+
+map({ "v", "n" }, "<leader>ce", function()
+  return require("refactoring").refactor("Extract Function")
+end, { desc = "Code Extract Function", expr = true })
+map({ "v", "n" }, "<leader>cv", function()
+  return require("refactoring").refactor("Extract Variable")
+end, { desc = "Code Extract Variable", expr = true })
