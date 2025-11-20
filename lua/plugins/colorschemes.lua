@@ -50,7 +50,6 @@ return {
         cmp = true,
         dashboard = true,
         flash = true,
-        fzf = true,
         grug_far = true,
         gitsigns = true,
         headlines = true,
@@ -66,7 +65,6 @@ return {
         noice = true,
         notify = true,
         snacks = true,
-        telescope = true,
         treesitter_context = true,
         which_key = true,
       },
@@ -88,13 +86,17 @@ return {
     end,
   },
 
-  -- Configure Telescope for colorscheme preview
+  -- Configure colorscheme picker with snacks
   {
-    "nvim-telescope/telescope.nvim",
+    "folke/snacks.nvim",
+    opts = function(_, opts)
+      opts.picker = opts.picker or {}
+      opts.picker.enabled = true
+    end,
     keys = {
       {
         "<leader>uC",
-        "<cmd>Telescope colorscheme enable_preview=true<cr>",
+        function() Snacks.picker.colorschemes() end,
         desc = "Colorscheme with preview",
       },
     },
