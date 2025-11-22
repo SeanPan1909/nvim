@@ -22,9 +22,14 @@ map("n", "ga", vim.lsp.buf.code_action, { desc = "Code actions" })
 
 map("n", "J", "<C-d>zz", { desc = "scroll down half a page" })
 map("n", "K", "<C-u>zz", { desc = "scroll up half a page" })
-map("n", "<CR>", "m`o<Esc>``", { desc = "enter a new line after cursor" })
-map("n", "<S-CR>", "m`O<Esc>``", { desc = "enter a new line after cursor" })
-map("n", "<BS>", "J", { desc = "Remove current line cursor is on " })
+
+-- Enter creates new line and places cursor at proper indentation
+map("n", "<CR>", "o", { desc = "New line below with auto-indent" })
+
+-- Backspace joins lines without moving cursor
+map("n", "<BS>", "mzJ`z", { desc = "Join line without moving cursor" })
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
 
 -- Tab navigation (using bufferline.nvim)
 map("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })

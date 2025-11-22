@@ -14,9 +14,43 @@ return {
       -- Always use Java 25 for jdtls in Neovim (overrides shell JAVA_HOME)
       vim.env.JAVA_HOME = "/Users/sean.pan/Library/Java/JavaVirtualMachines/openjdk-25/Contents/Home"
 
+      -- Override root_dir to use the service-level directory, not monorepo root
+      -- This prevents JDT LS from discovering sibling Maven projects like internal-models
+      opts.root_dir = function(fname)
+        local util = require("lspconfig.util")
+        -- Find the closest pom.xml that has src/main/java (actual service project)
+        local root = util.root_pattern("pom.xml")(fname)
+        if root then
+          -- Only use this root if it has src/main/java (it's a real service, not internal-models)
+          if vim.fn.isdirectory(root .. "/src/main/java") == 1 then
+            return root
+          end
+        end
+        return nil
+      end
+
       -- Ensure opts.settings exists
       opts.settings = opts.settings or {}
       opts.settings.java = opts.settings.java or {}
+
+      -- Force Eclipse to NOT resolve workspace projects (use Maven artifacts instead)
+      opts.settings.java.import = opts.settings.java.import or {}
+      opts.settings.java.import.maven = opts.settings.java.import.maven or {}
+      opts.settings.java.import.maven.offline = {enabled = false}
+      opts.settings.java.configuration = opts.settings.java.configuration or {}
+      opts.settings.java.configuration.maven = opts.settings.java.configuration.maven or {}
+      opts.settings.java.configuration.maven.userSettings = nil
+
+      -- Critical: Tell m2e to NOT resolve workspace projects
+      opts.settings["eclipse.m2e"] = opts.settings["eclipse.m2e"] or {}
+      opts.settings["eclipse.m2e"]["preferences.resolveWorkspaceProjects"] = false
+
+      -- Disable automatic project import to prevent internal-models from being imported
+      opts.settings.java.autobuild = opts.settings.java.autobuild or {}
+      opts.settings.java.autobuild.enabled = false
+      opts.settings.java.import = opts.settings.java.import or {}
+      opts.settings.java.import.maven = opts.settings.java.import.maven or {}
+      opts.settings.java.import.maven.enabled = true
 
       -- Configure formatter settings based on active profile
       if vim.g.java_format_profile == "loveholidays" then
@@ -53,14 +87,14 @@ return {
       -- Pattern: loveholidays → blank → third-party → blank → java/javax
       opts.settings.java.completion = {
         importOrder = {
-          "#",               -- Static imports first
-          "",                -- Blank line
+          "#", -- Static imports first
+          "", -- Blank line
           "com.travelmatch", -- Travelmatch packages
           "com.loveholidays", -- Loveholidays packages
-          "",                -- Blank line (third-party libs go in between)
-          "",                -- Blank line before standard libs
-          "javax",           -- javax packages
-          "java",            -- java packages
+          "", -- Blank line (third-party libs go in between)
+          "", -- Blank line before standard libs
+          "javax", -- javax packages
+          "java", -- java packages
         },
       }
 
@@ -68,11 +102,6 @@ return {
       opts.settings.java.codeGeneration = {
         generateComments = true,
         useBlocks = true,
-      }
-
-      -- Save actions
-      opts.settings.java.saveActions = {
-        organizeImports = true,
       }
 
       return opts
