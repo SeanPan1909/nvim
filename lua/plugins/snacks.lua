@@ -4,7 +4,10 @@ return {
     picker = {
       enabled = true,
     },
-    scratch = {
+    dashboard = {
+      enabled = true,
+    },
+    explorer = {
       enabled = false,
     },
   },
