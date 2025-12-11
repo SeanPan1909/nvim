@@ -25,6 +25,11 @@ vim.opt.showmode = false
 vim.opt.cmdheight = 0
 vim.opt.laststatus = 3
 
+-- Command-line completion (noice handles the UI)
+vim.opt.wildmenu = true
+vim.opt.wildmode = "list:longest,full"
+vim.opt.wildoptions = "pum"
+
 vim.opt.clipboard = "unnamed"
 vim.g.mapleader = " "
 
