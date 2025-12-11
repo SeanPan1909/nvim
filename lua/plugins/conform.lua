@@ -45,11 +45,8 @@ return {
       bash = { "shfmt" },
     },
 
-    -- Format on save
-    format_on_save = {
-      timeout_ms = 500,
-      lsp_fallback = true,
-    },
+    -- Format on save disabled
+    format_on_save = false,
 
     -- Formatter settings
     formatters = {

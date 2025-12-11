@@ -14,6 +14,10 @@ return {
       -- Always use Java 25 for jdtls in Neovim (overrides shell JAVA_HOME)
       vim.env.JAVA_HOME = "/Users/sean.pan/Library/Java/JavaVirtualMachines/openjdk-25/Contents/Home"
 
+      -- Disable LSP progress notifications (the "validating" messages)
+      opts.handlers = opts.handlers or {}
+      opts.handlers["$/progress"] = function() end
+
       -- Override root_dir to use the service-level directory, not monorepo root
       -- This prevents JDT LS from discovering sibling Maven projects like internal-models
       opts.root_dir = function(fname)
