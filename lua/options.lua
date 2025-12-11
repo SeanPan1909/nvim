@@ -27,7 +27,7 @@ vim.opt.laststatus = 3
 
 -- Command-line completion (noice handles the UI)
 vim.opt.wildmenu = true
-vim.opt.wildmode = "list:longest,full"
+vim.opt.wildmode = "full"
 vim.opt.wildoptions = "pum"
 
 vim.opt.clipboard = "unnamed"

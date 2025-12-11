@@ -18,7 +18,7 @@ return {
       },
     },
     popupmenu = {
-      enabled = false, -- Let cmp-cmdline handle auto-completion
+      enabled = false, -- cmp-cmdline handles the completion popup
     },
     lsp = {
       override = {

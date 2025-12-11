@@ -22,3 +22,5 @@ map("n", "C", '"_C', { desc = "Change to end of line without yanking" })
 map("x", "p", "\"_dP")
 
 map("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search and replace highlighted word"})
+
+map("n", "<leader>qq", ":qa<CR>", { desc = "Quit Neovim entirely" })

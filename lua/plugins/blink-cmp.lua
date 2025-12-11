@@ -1,7 +1,7 @@
 return {
   "Saghen/blink.cmp",
   version = "*",
-  event = "InsertEnter",
+  event = { "InsertEnter", "CmdlineEnter" },
   dependencies = {
     "rafamadriz/friendly-snippets",
   },
@@ -32,9 +32,14 @@ return {
         },
       },
       menu = {
+        enabled = true,
+        auto_show = true,
         draw = {
           treesitter = { "lsp" },
         },
+      },
+      ghost_text = {
+        enabled = true,
       },
       documentation = {
         auto_show = true,
@@ -49,6 +54,22 @@ return {
       window = {
         border = "rounded",
       },
+    },
+    cmdline = {
+      enabled = true,
+      keymap = {
+        preset = "default",
+      },
+      sources = function()
+        local type = vim.fn.getcmdtype()
+        if type == "/" or type == "?" then
+          return { "buffer" }
+        end
+        if type == ":" then
+          return { "cmdline", "path" }
+        end
+        return {}
+      end,
     },
   },
 }
