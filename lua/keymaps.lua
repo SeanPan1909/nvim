@@ -24,3 +24,11 @@ map("x", "p", "\"_dP")
 map("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search and replace highlighted word"})
 
 map("n", "<leader>qq", ":qa<CR>", { desc = "Quit Neovim entirely" })
+
+-- Better indenting - stay in visual mode after indenting
+map("v", "<", "<gv", { desc = "Indent left and keep selection" })
+map("v", ">", ">gv", { desc = "Indent right and keep selection" })
+
+-- Indent current line in normal mode (repeatable with . or just press >> again)
+map("n", "<", "<<", { desc = "Indent line left" })
+map("n", ">", ">>", { desc = "Indent line right" })

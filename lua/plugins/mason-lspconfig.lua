@@ -8,7 +8,6 @@ return {
         ensure_installed = {
             -- Core languages you specified
             "lua_ls",           -- Lua
-            "basedpyright",     -- Python (best option)
             "pyright",
             "jdtls",            -- Java
             "gopls",            -- Go

@@ -4,10 +4,7 @@ return {
   import = "plugins.lspconfig",
   keys = {
     { "gk", vim.lsp.buf.hover, desc = "Display language information" },
-    { "gd", vim.lsp.buf.definition, desc = "Go to definition" },
-    { "gr", vim.lsp.buf.references, desc = "Go to references" },
-    { "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
-    { "gt", vim.lsp.buf.type_definition, desc = "Go to type definition" },
+    -- gd, gr, gi, gt are handled by snacks picker (see snacks/picker.lua)
     { "gn", vim.lsp.buf.rename, desc = "Rename symbol" },
     { "<leader>ca", vim.lsp.buf.code_action, desc = "Code action" },
     { "<leader>d", vim.diagnostic.open_float, desc = "Show line diagnostics" },

@@ -1,3 +1,7 @@
+-- Snacks terminal disabled in favor of toggleterm.nvim
+-- If you want to re-enable, uncomment the code below
+
+--[[
 local Snacks = require("snacks")
 
 return {
@@ -21,3 +25,6 @@ return {
     },
   }
 }
+--]]
+
+return {}
