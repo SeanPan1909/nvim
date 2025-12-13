@@ -2,7 +2,7 @@ return {
   "neovim/nvim-lspconfig",
   opts = function()
     -- Configure basedpyright using new vim.lsp API
-    vim.lsp.config("basedpyright", {
+    vim.lsp.config("pyright", {
       settings = {
         basedpyright = {
           analysis = {
@@ -21,6 +21,6 @@ return {
       },
     })
 
-    vim.lsp.enable("basedpyright")
+    vim.lsp.enable("pyright")
   end,
 }

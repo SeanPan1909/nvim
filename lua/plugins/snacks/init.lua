@@ -21,15 +21,13 @@ return {
       keymap = { enabled = true },
       layout = { enabled = false }, -- No clue what this does
       lazygit = { enabled = false }, --TODO: Maybe worth my time to checkout what Lazygit does (it's a standalone program that can be integrated into neovim)
-      notifier = { enabled = true, timeout = 3000 },
       notify = { enabled = true },
-      notifier = { enabled = true },
+      notifier = { enabled = true, timeout = 3000 },
       quickfile = { enabled = false },
       rename = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },
       statuscolumn = { enabled = true },
-      terminal = { enabled = false },
       toggle = { enabled = true },
       util = { enabled = false },
       win = { enabled = true },
