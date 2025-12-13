@@ -1,43 +1,57 @@
+
+function setShell () 
+  local isWindows = not vim.fn.has('macunix')
+  if isWindows ~= 1 then
+    vim.o.shell = "C:\\git-sdk-64\\msys2_shell.cmd"
+    vim.o.shellcmdflag = "-defterm -here -no-start -mingw64 -shell zsh"
+  end
+end
+
 return {
   "akinsho/toggleterm.nvim",
   version = "*",
-  opts = {
-    size = function(term)
-      if term.direction == "horizontal" then
-        return 15
-      elseif term.direction == "vertical" then
-        return vim.o.columns * 0.4
-      end
-    end,
-    open_mapping = [[<c-\>]],
-    hide_numbers = true,
-    shade_terminals = true,
-    start_in_insert = true,
-    insert_mappings = true,
-    terminal_mappings = true,
-    persist_size = true,
-    persist_mode = true,
-    direction = "float",
-    close_on_exit = true,
-    shell = vim.o.shell,
-    auto_scroll = true,
-    float_opts = {
-      border = "curved",
-      width = function()
-        return math.floor(vim.o.columns * 0.9)
-      end,
-      height = function()
-        return math.floor(vim.o.lines * 0.9)
-      end,
-      winblend = 0,
-    },
-    winbar = {
-      enabled = true,
-      name_formatter = function(term)
-        return string.format("%d:%s", term.id, term.name or term.cmd)
-      end,
-    },
-  },
+  opts = function()
+    setShell()
+    return {
+      {
+        size = function(term)
+          if term.direction == "horizontal" then
+            return 15
+          elseif term.direction == "vertical" then
+            return vim.o.columns * 0.4
+          end
+        end,
+        open_mapping = [[<c-\>]],
+        hide_numbers = true,
+        shade_terminals = true,
+        start_in_insert = true,
+        insert_mappings = true,
+        terminal_mappings = true,
+        persist_size = true,
+        persist_mode = true,
+        direction = "float",
+        close_on_exit = true,
+        shell = vim.o.shell,
+        auto_scroll = true,
+        float_opts = {
+          border = "curved",
+          width = function()
+            return math.floor(vim.o.columns * 0.9)
+          end,
+          height = function()
+            return math.floor(vim.o.lines * 0.9)
+          end,
+          winblend = 0,
+        },
+        winbar = {
+          enabled = true,
+          name_formatter = function(term)
+            return string.format("%d:%s", term.id, term.name or term.cmd)
+          end,
+        },
+      }
+    }
+  end,
   keys = {
     -- Toggle floating terminal
     { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", desc = "Terminal Float", mode = { "n", "t" } },
@@ -79,12 +93,6 @@ return {
     vim.keymap.set("t", "<A-Down>", [[<Cmd>resize -2<CR>]], { desc = "Decrease window height" })
     vim.keymap.set("t", "<A-Left>", [[<Cmd>vertical resize -2<CR>]], { desc = "Decrease window width" })
     vim.keymap.set("t", "<A-Right>", [[<Cmd>vertical resize +2<CR>]], { desc = "Increase window width" })
-
-    -- Also add resize in normal mode for consistency
-    vim.keymap.set("n", "<A-Up>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
-    vim.keymap.set("n", "<A-Down>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
-    vim.keymap.set("n", "<A-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
-    vim.keymap.set("n", "<A-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Increase window width" })
 
     -- ESC to exit terminal mode
     vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
