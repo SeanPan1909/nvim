@@ -8,7 +8,8 @@ return {
         ensure_installed = {
             -- Core languages you specified
             "lua_ls",           -- Lua
-            "pyright",
+            -- Conditional Python LSP: basedpyright on Unix, pyright on Windows
+            vim.fn.has("win32") == 1 and "pyright" or "basedpyright",
             "jdtls",            -- Java
             "gopls",            -- Go
             "html",             -- HTML

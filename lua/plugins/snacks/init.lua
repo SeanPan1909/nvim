@@ -23,6 +23,14 @@ return {
       lazygit = { enabled = false }, --TODO: Maybe worth my time to checkout what Lazygit does (it's a standalone program that can be integrated into neovim)
       notify = { enabled = true },
       notifier = { enabled = true, timeout = 3000 },
+      picker = {
+        enabled = true,
+        opts = {
+          find = {
+            args = { "--hidden", "--glob", "!.git", "--glob", "!venv", "--glob", "!**/venv/**" }
+          }
+        }
+      },
       quickfile = { enabled = false },
       rename = { enabled = true },
       scope = { enabled = true },
