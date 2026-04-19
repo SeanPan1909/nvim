@@ -30,6 +30,8 @@ vim.opt.wildmenu = true
 vim.opt.wildmode = "full"
 vim.opt.wildoptions = "pum"
 
+-- This may be of use if you encounter an error with copying and pasting
+-- https://github.com/microsoft/WSL/issues/5466
 vim.opt.clipboard = "unnamed"
 vim.g.mapleader = " "
 
