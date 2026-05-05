@@ -1,9 +1,10 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "main",
   build = ":TSUpdate",
   lazy = false,
-  opts = {
-    ensure_installed = {
+  config = function()
+    require("nvim-treesitter").install({
       -- Core languages matching your LSP setup
       "lua",
       "python",
@@ -28,22 +29,13 @@ return {
       "vimdoc",
       "regex",
       "comment",
-    },
-    highlight = {
-      enable = true,
-      additional_vim_regex_highlighting = false,
-    },
-    indent = {
-      enable = true,
-    },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "<CR>",
-        node_incremental = "<CR>",
-        scope_incremental = "<S-CR>",
-        node_decremental = "<BS>",
-      },
-    },
-  },
+    })
+
+    vim.api.nvim_create_autocmd("FileType", {
+      group = vim.api.nvim_create_augroup("treesitter_start", { clear = true }),
+      callback = function()
+        pcall(vim.treesitter.start)
+      end,
+    })
+  end,
 }

@@ -7,6 +7,17 @@ return {
     { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
     { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
     { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
+    {
+      "<leader>sg",
+      function()
+        local selection = Snacks.picker.util.visual()
+        if selection and selection.text ~= "" then
+          Snacks.picker.grep({ search = selection.text, regex = false, live = false })
+        end
+      end,
+      desc = "Grep Selection",
+      mode = "x",
+    },
     { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
     { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
     { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
